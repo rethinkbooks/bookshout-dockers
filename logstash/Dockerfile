@@ -1,4 +1,4 @@
-FROM logstash:2.0
+FROM logstash:2.2
 
 RUN set -x \
 	&& plugin install logstash-input-beats 

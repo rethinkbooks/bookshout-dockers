@@ -48,6 +48,13 @@ RUN set -x \
 	&& chown -R kibana:kibana /opt/kibana \
 	&& rm -rf /var/lib/apt/lists/*
 
+# Install certs
+RUN set -x \
+	&& apt-get install openssl \
+	&& openssl genrsa -des3 -out /var/run/secrets/kube.bookshout.com.key 1024 \
+	&& openssl req -new -key /var/run/secrets/kube.bookshout.com.key -out /var/run/secrets/kube.bookshout.com.csr \
+	&& openssl x509 -req -days 365 -in /var/run/secrets/kube.bookshout.com.csr -signkey /var/run/secrets/kube.bookshout.com.key -out /var/run/secrets/kube.bookshout.com.crt
+
 ENV PATH /opt/kibana/bin:$PATH
 
 COPY docker-entrypoint.sh /

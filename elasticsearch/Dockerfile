@@ -9,6 +9,7 @@ ADD do_not_use.yml /elasticsearch/config/elasticsearch.yml
 RUN /elasticsearch/bin/plugin install io.fabric8/elasticsearch-cloud-kubernetes/2.2.1_01 --verbose
 RUN /elasticsearch/bin/plugin install license
 RUN /elasticsearch/bin/plugin install shield
+RUN /elasticsearch/bin/plugin install cloud-aws
 
 # Override elasticsearch.yml config, otherwise plug-in install will fail
 ADD elasticsearch.yml /elasticsearch/config/elasticsearch.yml

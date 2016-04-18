@@ -21,5 +21,9 @@ export DISCOVERY_SERVICE=${DISCOVERY_SERVICE:-elasticsearch-discovery}
 # allow for memlock
 ulimit -l unlimited
 
+# add elasticsearch user
+if [ "$ELASTICSEARCH_USER" ]
+	/elasticsearch/bin/esusers useradd $ELASTICSEARCH_USER -p $ELASTICSEARCH_PASSWORD
+fi
 # run
 sudo -E -u elasticsearch /elasticsearch/bin/elasticsearch

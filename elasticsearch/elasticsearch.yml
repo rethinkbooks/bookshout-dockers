@@ -25,6 +25,10 @@ cloud:
   kubernetes:
     service: ${DISCOVERY_SERVICE}
     namespace: ${NAMESPACE}
+  aws:
+    access_key: ${AWS_ACCESS_KEY_ID}
+    secret_key: ${AWS_SECRET_ACCESS_KEY}
+    region: us-east
 discovery:
     type: kubernetes
     zen.ping.multicast.enabled: false

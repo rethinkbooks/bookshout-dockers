@@ -33,6 +33,10 @@ fi
 if [ "$BOOKSHOUT_USER" ]; then
 	/elasticsearch/bin/shield/esusers useradd $BOOKSHOUT_USER -r kibana4 -p $BOOKSHOUT_PASSWORD
 fi
+# add logstash user
+if [ "$LOGSTASH_USER" ]; then
+	/elasticsearch/bin/shield/esusers useradd $LOGSTASH_USER -r logstash -p $LOGSTASH_PASSWORD
+fi
 
 # run
 sudo -E -u elasticsearch /elasticsearch/bin/elasticsearch

@@ -50,7 +50,7 @@ RUN set -x \
 
 # Install certs
 RUN set -x \
-	&& apt-get install openssl \
+	&& mkdir /var/run/secrets \
 	&& openssl genrsa -des3 -out /var/run/secrets/kube.bookshout.com.key 1024 \
 	&& openssl req -new -key /var/run/secrets/kube.bookshout.com.key -out /var/run/secrets/kube.bookshout.com.csr \
 	&& openssl x509 -req -days 365 -in /var/run/secrets/kube.bookshout.com.csr -signkey /var/run/secrets/kube.bookshout.com.key -out /var/run/secrets/kube.bookshout.com.crt

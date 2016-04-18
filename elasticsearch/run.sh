@@ -23,7 +23,16 @@ ulimit -l unlimited
 
 # add elasticsearch user
 if [ "$ELASTICSEARCH_USER" ]
-	/elasticsearch/bin/esusers useradd $ELASTICSEARCH_USER -p $ELASTICSEARCH_PASSWORD
+	/elasticsearch/bin/esusers useradd $ELASTICSEARCH_USER -r admin -p $ELASTICSEARCH_PASSWORD
 fi
+# add kibana user
+if [ "$KIBANA_USER" ]
+	/elasticsearch/bin/esusers useradd $KIBANA_USER -r kibana4_server -p $KIBANA_PASSWORD
+fi
+# add bookshout user
+if [ "$BOOKSHOUT_USER" ]
+	/elasticsearch/bin/esusers useradd $BOOKSHOUT_USER -r kibana4 -p $BOOKSHOUT_PASSWORD
+fi
+
 # run
 sudo -E -u elasticsearch /elasticsearch/bin/elasticsearch

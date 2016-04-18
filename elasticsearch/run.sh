@@ -23,15 +23,15 @@ ulimit -l unlimited
 
 # add elasticsearch user
 if [ "$ELASTICSEARCH_USER" ]; then
-	/elasticsearch/bin/esusers useradd $ELASTICSEARCH_USER -r admin -p $ELASTICSEARCH_PASSWORD
+	/elasticsearch/bin/shield/esusers useradd $ELASTICSEARCH_USER -r admin -p $ELASTICSEARCH_PASSWORD
 fi
 # add kibana user
 if [ "$KIBANA_USER" ]; then
-	/elasticsearch/bin/esusers useradd $KIBANA_USER -r kibana4_server -p $KIBANA_PASSWORD
+	/elasticsearch/bin/shield/esusers useradd $KIBANA_USER -r kibana4_server -p $KIBANA_PASSWORD
 fi
 # add bookshout user
 if [ "$BOOKSHOUT_USER" ]; then
-	/elasticsearch/bin/esusers useradd $BOOKSHOUT_USER -r kibana4 -p $BOOKSHOUT_PASSWORD
+	/elasticsearch/bin/shield/esusers useradd $BOOKSHOUT_USER -r kibana4 -p $BOOKSHOUT_PASSWORD
 fi
 
 # run

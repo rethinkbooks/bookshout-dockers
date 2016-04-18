@@ -51,9 +51,7 @@ RUN set -x \
 # Install certs
 RUN set -x \
 	&& mkdir /var/run/secrets \
-	&& openssl genrsa -des3 -out /var/run/secrets/kube.bookshout.com.key 1024 \
-	&& openssl req -new -key /var/run/secrets/kube.bookshout.com.key -out /var/run/secrets/kube.bookshout.com.csr \
-	&& openssl x509 -req -days 365 -in /var/run/secrets/kube.bookshout.com.csr -signkey /var/run/secrets/kube.bookshout.com.key -out /var/run/secrets/kube.bookshout.com.crt
+	&& openssl req -subj '/CN=bookshout.com/O=My Company Name LTD./C=US' -new -newkey rsa:2048 -days 365 -nodes -x509 -keyout /var/run/secrets/kube.bookshout.com.key -out /var/run/secrets/kube.bookshout.com.crt
 
 ENV PATH /opt/kibana/bin:$PATH
 

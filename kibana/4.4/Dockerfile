@@ -46,7 +46,7 @@ RUN set -x \
 	&& apt-get install -y --no-install-recommends kibana=$KIBANA_VERSION \
 	&& /opt/kibana/bin/kibana plugin --install kibana/shield/2.3.1 \
 	&& chown -R kibana:kibana /opt/kibana \
-	&& rm -rf /var/lib/apt/lists/* \
+	&& rm -rf /var/lib/apt/lists/*
 
 ENV PATH /opt/kibana/bin:$PATH
 

@@ -23,6 +23,8 @@ if [ "$1" = 'kibana' ]; then
 		echo "elasticsearch.username: $ELASTICSEARCH_USERNAME" >> /opt/kibana/config/kibana.yml
 		echo "elasticsearch.password: $ELASTICSEARCH_PASSWORD" >> /opt/kibana/config/kibana.yml
 		echo "shield.encryptionKey: $SHIELD_ENCRYPTION_KEY" >> /opt/kibana/config/kibana.yml
+		echo "server.ssl.key: $SERVER_SSL_KEY" >> /opt/kibana/config/kibana.yml
+		echo "server.ssl.cert: $SERVER_SSL_CERT" >> /opt/kibana/config/kibana.yml
 	fi
 	set -- gosu kibana tini -- "$@"
 fi

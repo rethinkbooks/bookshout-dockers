@@ -44,9 +44,9 @@ RUN echo "deb http://packages.elastic.co/kibana/${KIBANA_MAJOR}/debian stable ma
 RUN set -x \
 	&& apt-get update \
 	&& apt-get install -y --no-install-recommends kibana=$KIBANA_VERSION \
+	&& /opt/kibana/bin/kibana plugin --install kibana/shield/2.3.1 \
 	&& chown -R kibana:kibana /opt/kibana \
 	&& rm -rf /var/lib/apt/lists/* \
-	&& /opt/kibana/bin/kibana plugin --install kibana/shield/2.3.1
 
 ENV PATH /opt/kibana/bin:$PATH
 

@@ -12,16 +12,18 @@ if [ "$1" = 'kibana' ]; then
 	if [ "$ELASTICSEARCH_URL" -o "$ELASTICSEARCH_PORT_9200_TCP" ]; then
 		: ${ELASTICSEARCH_URL:='http://elasticsearch:9200'}
 		sed -ri "s!^(\#\s*)?(elasticsearch\.url:).*!\2 '$ELASTICSEARCH_URL'!" /opt/kibana/config/kibana.yml
-		echo "elasticsearch.username: kibana4-server" >> /opt/kibana/config/kibana.yml
-		echo "elasticsearch.password: )5FjDvAT66" >> /opt/kibana/config/kibana.yml
-		echo 'shield.encryptionKey: "something_secret"' >> /opt/kibana/config/kibana.yml
 	else
 		echo >&2 'warning: missing ELASTICSEARCH_PORT_9200_TCP or ELASTICSEARCH_URL'
 		echo >&2 '  Did you forget to --link some-elasticsearch:elasticsearch'
 		echo >&2 '  or -e ELASTICSEARCH_URL=http://some-elasticsearch:9200 ?'
 		echo >&2
 	fi
-	
+
+	if [ "$ELASTICSEARCH_USERNAME" -o "$ELASTICSEARCH_PASSWORD" ]; then
+		echo "elasticsearch.username: $ELASTICSEARCH_USERNAME" >> /opt/kibana/config/kibana.yml
+		echo "elasticsearch.password: $ELASTICSEARCH_PASSWORD" >> /opt/kibana/config/kibana.yml
+		echo "shield.encryptionKey: $SHIELD_ENCRYPTION_KEY" >> /opt/kibana/config/kibana.yml
+	fi
 	set -- gosu kibana tini -- "$@"
 fi
 

@@ -32,20 +32,30 @@ RUN set -x \
 	&& chmod +x /usr/local/bin/tini \
 	&& tini -h
 
-ENV KIBANA_VERSION 4.3.3
-ENV KIBANA_SHA1 3d3d0ae7658a3a7cd0d79e0f3c21701511604531
+# https://www.elastic.co/guide/en/kibana/4.4/setup.html#kibana-apt
+# https://packages.elasticsearch.org/GPG-KEY-elasticsearch
+RUN apt-key adv --keyserver ha.pool.sks-keyservers.net --recv-keys 46095ACC8548582C1A2699A9D27D666CD88E42B4
+
+ENV KIBANA_MAJOR 4.5
+ENV KIBANA_VERSION 4.5.0
+
+RUN echo "deb http://packages.elastic.co/kibana/${KIBANA_MAJOR}/debian stable main" > /etc/apt/sources.list.d/kibana.list
 
 RUN set -x \
-	&& wget -O kibana.tar.gz "https://download.elastic.co/kibana/kibana/kibana-${KIBANA_VERSION}-linux-x64.tar.gz" \
-	&& echo "${KIBANA_SHA1} *kibana.tar.gz" | sha1sum -c - \
-	&& mkdir -p /opt/kibana \
-	&& tar -xz --strip-components=1 -C /opt/kibana -f kibana.tar.gz \
+	&& apt-get update \
+	&& apt-get install -y --no-install-recommends kibana=$KIBANA_VERSION \
+	&& /opt/kibana/bin/kibana plugin --install kibana/shield/2.2.1 \
 	&& chown -R kibana:kibana /opt/kibana \
-	&& rm kibana.tar.gz
+	&& rm -rf /var/lib/apt/lists/*
+
+# Install certs
+RUN set -x \
+	&& mkdir /var/run/secrets \
+	&& openssl req -subj '/CN=bookshout.com/O=My Company Name LTD./C=US' -new -newkey rsa:2048 -days 365 -nodes -x509 -keyout /var/run/secrets/kube.bookshout.com.key -out /var/run/secrets/kube.bookshout.com.crt
 
 ENV PATH /opt/kibana/bin:$PATH
 
-COPY ./docker-entrypoint.sh /
+COPY docker-entrypoint.sh /
 
 EXPOSE 5601
 ENTRYPOINT ["/docker-entrypoint.sh"]

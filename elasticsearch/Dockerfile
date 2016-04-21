@@ -10,6 +10,7 @@ RUN /elasticsearch/bin/plugin install io.fabric8/elasticsearch-cloud-kubernetes/
 RUN /elasticsearch/bin/plugin install license
 RUN /elasticsearch/bin/plugin install shield
 RUN /elasticsearch/bin/plugin install cloud-aws
+RUN /elasticsearch/bin/plugin install lmenezes/elasticsearch-kopf/master
 
 # Override elasticsearch.yml config, otherwise plug-in install will fail
 ADD elasticsearch.yml /elasticsearch/config/elasticsearch.yml

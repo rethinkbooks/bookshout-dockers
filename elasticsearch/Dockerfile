@@ -1,4 +1,4 @@
-FROM quay.io/pires/docker-elasticsearch:2.3.1
+FROM quay.io/pires/docker-elasticsearch:2.2.1
 
 MAINTAINER pjpires@gmail.com
 
@@ -6,7 +6,7 @@ MAINTAINER pjpires@gmail.com
 ADD do_not_use.yml /elasticsearch/config/elasticsearch.yml
 
 # Install Elasticsearch plug-ins
-RUN /elasticsearch/bin/plugin install io.fabric8/elasticsearch-cloud-kubernetes/2.3.1 --verbose
+RUN /elasticsearch/bin/plugin install io.fabric8/elasticsearch-cloud-kubernetes/2.2.1_01 --verbose
 RUN /elasticsearch/bin/plugin install license
 RUN /elasticsearch/bin/plugin install shield
 RUN /elasticsearch/bin/plugin install cloud-aws
